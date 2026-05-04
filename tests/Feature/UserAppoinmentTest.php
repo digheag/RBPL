@@ -29,6 +29,7 @@ class UserAppoinmentTest extends TestCase
             'role' => 'users',
         ]);
         $this->actingAs($this->user);
+        $this->withoutVite();
     }
 
     protected function makeAppointmentDTO($isApproved = null, $isAgentApprove = false): AppointmentDTO

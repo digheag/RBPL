@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('property_id')->constrained();
             $table->foreignId('seller_id')->constrained('users');
-            $table->foreignId('agent_id')->constrained();
+            $table->foreignId('agent_id')->constrained('users');
             $table->foreignId('buyer_id')->constrained('users');
             $table->float('deal_price');
             $table->enum('transaction_type', ['negotiation', 'direct']);

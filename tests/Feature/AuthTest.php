@@ -12,6 +12,7 @@ class AuthTest extends TestCase
     use RefreshDatabase, WithFaker;
     protected function setUp():void{
         parent::setUp();
+        $this->withoutVite();
         
     }
 

@@ -3,9 +3,9 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use app\Models\Property;
-use app\Models\User;
-use app\Models\Agent;
+use App\Models\Property;
+use App\Models\User;
+use App\Models\Agent;
 use App\Models\Negotiation;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Transaction>

@@ -58,6 +58,10 @@ class TransactionController extends Controller
             'property'
         ])->findOrFail($id);
 
+        if ($transaction->buyer_id !== Auth::id()) {
+        abort(403);
+        }
+
         return view('users/transactionDetail',[
             'transaction' => $transaction,
             'link' => route('users.transaction'),
@@ -90,7 +94,7 @@ class TransactionController extends Controller
          $agentId = session('agentId');
         $propertyId = session('propertyId');
 
-        if (!$agentId || !$propertyId) {
+        if (empty($agentId) || empty($propertyId)) {
             return redirect()->route('users.property')
                 ->with('error', 'Session tidak valid');
         }

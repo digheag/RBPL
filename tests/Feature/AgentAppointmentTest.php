@@ -36,6 +36,15 @@ class AgentAppointmentTest extends TestCase
 
     public function test_agent_can_access_list_appointment_page(): void
     {
+        $fakeAppointments = [
+        $this->makeAppointmentDTO()
+        ];
+        $this->mock(AppointmentRepository::class, function ($mock) use ($fakeAppointments) {
+        $mock->shouldReceive('getAll')
+            ->once()
+            ->andReturn($fakeAppointments);
+        });
+        
         $response = $this->get(route('agent.appointmentList'));
 
         $response->assertOk();
@@ -50,6 +59,7 @@ class AgentAppointmentTest extends TestCase
             'role' => 'agent',
         ]);
         $this->actingAs($this->user);
+        $this->withoutVite();
 
         $fakeAppointment = new AppointmentDTO();
         $fakeAppointment->id = 1;

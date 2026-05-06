@@ -61,6 +61,12 @@ Route::prefix('/users')->group(function (){
     Route::get('/history-negotiation', function () {
         return view('users.history-negotiation');
     });
+    Route::get('/negotiation-detail', function () {
+        return view('users.negotiation-detail');
+    });
+    Route::get('/negotiation-detail-rejected', function () {
+        return view('users.negotiation-detail-rejected');
+    });
 });
 
 

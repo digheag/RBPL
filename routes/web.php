@@ -99,6 +99,12 @@ Route::prefix('/agent')
     Route::get('/property/{id}', [AgentController::class, 'detailProperty']);
     Route::get('/property/{id}/publication', [AgentController::class, 'publication']);
     Route::get('/offer', [AgentController::class, 'offer']);
+    Route::get('/history-negotiation', function () {
+    return view('agent.history-negotiation'); });
+    Route::get('/negotiation-pending', function () {
+    return view('agent.negotiation-pending'); });
+    Route::get('/negotiation-rejected', function () {
+    return view('agent.negotiation-rejected'); });
 });
 
 Route::get('/notary/home', function () {

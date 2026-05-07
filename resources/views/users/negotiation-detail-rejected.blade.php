@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Negotiation Detail</title>
+    <title>Negotiation Detail Rejected</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -77,26 +77,26 @@
 
         </div>
 
-        @include('components.common.negotiation-status', [
-        'type' => 'approved'
-     ])
+        <div class="flex flex-col items-start gap-4">
+            @include('components.common.negotiation-status', [
+                'type' => 'rejected'
+            ])
+
+            <p class="text-[#F375C2] text-[24px] font-medium">
+                Penawaran tidak sesuai dengan harga pasar
+            </p>
+        </div>
 
     </div>
 
-    
     <div class="w-full">
-    @include('components.common.button', [
-        'href' => url('/users/transaction/method'),
-        'slot' => 'Lakukan pembayaran'
-    ])
-</div>
-
-    
-</div>
-</div>
+        @include('components.common.button', [
+            'href' => url('/users/renegotiation'),
+            'slot' => 'Ajukan negosiasi ulang'
+        ])
+    </div>
 
 </div>
 
 </body>
 </html>
-@endinclude

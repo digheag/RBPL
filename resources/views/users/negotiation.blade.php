@@ -1,22 +1,75 @@
-@extends("layouts/users")
-@section("content")
-<div class="flex backdrop-blur-md border border-white/20 shadow-lg rounded-2xl mx-[80px] py-[32px] px-[80px] flex-col gap-[32px]">
-    <h1 class="text-[26px] font-bold text-[var(--color-text)]">Riwayat Negosiasi</h1>
-    <div class="p-[1px] bg-gradient-to-r from-[#0E21A0] via-[#B153D7] to-[#4D2FB2] rounded-xl">
-        <article class="bg-[var(--color-surface)] flex justify-between items-center p-[16px] rounded-xl">
-            <div>
-                <h2 class="text-[22px] font-semibold">Modern Building House</h2>
-            </div>
-            <div class="flex flex-row gap-[16px] items-center">
-                <div class="inline-block px-[8px] py-[8px] rounded-[8px] border-2 border-white 
-                bg-[var(--color-highlight)] text-[var(--color-text)] font-semibold text-[16px] text-center">
-                Disetujui
+@extends('layouts.users')
+
+@section('content')
+<div class="w-full flex justify-center">
+    <div class="w-[1120px] px-[80px] py-[60px] flex flex-col items-start gap-16 rounded-tr-[20px] rounded-br-[20px] rounded-bl-[20px] shadow-[inset_4px_0px_3px_rgba(59,104,255,0.28),0px_4px_4px_rgba(59,104,255,0.10)]">
+
+        <div class="w-full flex flex-col gap-9">
+            <h1 class="text-[45px] font-bold text-[#EFECE3]">Riwayat Negosiasi</h1>
+
+            <div class="w-full flex flex-col gap-9">
+
+                <div class="w-full px-4 bg-[#1E1E1E] rounded-lg shadow-[0px_4px_4px_rgba(0,0,0,0.25)] border border-[#0E21A0] flex justify-between items-center">
+                    <div class="h-24 flex items-center">
+                        <div class="flex flex-col justify-center">
+                            <p class="text-base font-medium text-[#EFECE3]">ID Negosiasi: N01</p>
+                            <p class="text-2xl font-bold text-[#EFECE3]">Modern Boarding House</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-4">
+                        @include('components.common.negotiation-status', [
+                            'type' => 'approved'
+                        ])
+                    <a href="{{ url('/users/negotiation-detail') }}">
+                        <img src="/img/arrow.png" class="w-6 h-6" />
+                    </a>
+                    </div>
                 </div>
-                <a href="/users/negotiation/detail">
-                <i class="fa-solid fa-angle-right text-4xl"></i>
-                </a>
+
+                <div class="w-full px-4 bg-[#1E1E1E] rounded-lg shadow-[0px_4px_4px_rgba(0,0,0,0.25)] border border-[#0E21A0] flex justify-between items-center">
+                    <div class="h-24 flex items-center">
+                        <div class="flex flex-col justify-center">
+                            <p class="text-base font-medium text-[#EFECE3]">ID Negosiasi: N02</p>
+                            <p class="text-2xl font-bold text-[#EFECE3]">Modern Boarding House</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-4">
+                        @include('components.common.negotiation-status', [
+                            'type' => 'rejected'
+                        ])
+
+                    <a href="{{ url('/users/negotiation-detail-rejected') }}">
+                        <img src="/img/arrow.png" class="w-6 h-6" />
+                    </a>
+                    </div>
+                </div>
+
             </div>
-        </article>
+        </div>
+
+        <div class="w-full flex flex-col gap-9">
+            <h1 class="text-[45px] font-bold text-[#EFECE3]">Menunggu persetujuan</h1>
+
+            <div class="w-full px-4 bg-[#1E1E1E] rounded-lg shadow-[0px_4px_4px_rgba(0,0,0,0.25)] border border-[#0E21A0] flex justify-between items-center">
+                <div class="h-24 flex items-center">
+                    <div class="flex flex-col justify-center">
+                        <p class="text-base font-medium text-[#EFECE3]">ID Negosiasi: N03</p>
+                        <p class="text-2xl font-bold text-[#EFECE3]">Modern Boarding House</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    @include('components.common.negotiation-status', [
+                        'type' => 'pending'
+                    ])
+
+                    <img src="/img/arrow.png" class="w-6 h-6" />
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 @endsection

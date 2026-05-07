@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignId('district_id')->constrained();
             $table->string('property_name');
             $table->string('property_address');
-            $table->datetime('actual_time_schedule');
-            $table->boolean('is_approved_by_agen');
+            $table->datetime('actual_time_schedule')->nullable();
+            $table->boolean('is_approved_by_agen')->nullable();
             $table->timestamps();
         });
     }

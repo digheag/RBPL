@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('property_images', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('url');
-            $table->boolean('is_banner');
-            $table->timestamp('sold_date');
-            $table->timestamps();
+        Schema::table('transactions', function (Blueprint $table) {
+            $table->foreignId('negotiation_id')
+                ->nullable()
+                ->unique()
+                ->constrained()
+                ->cascadeOnDelete();
         });
     }
 
@@ -26,6 +25,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('property_images');
+        Schema::table('transactions', function (Blueprint $table) {
+            //
+        });
     }
 };

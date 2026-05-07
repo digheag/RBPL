@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Notary;
+use App\Models\notary;
 
 class NotarySeeder extends Seeder
 {
@@ -13,6 +13,6 @@ class NotarySeeder extends Seeder
      */
     public function run(): void
     {
-        Notary::factory(10)->create();
+        notary::factory(10)->create();
     }
 }

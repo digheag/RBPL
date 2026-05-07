@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Agent;
+use App\Models\Agent_regency;
 
 class AgentSeeder extends Seeder
 {
@@ -13,6 +14,6 @@ class AgentSeeder extends Seeder
      */
     public function run(): void
     {
-        Agent::factory(10)->create();
+        Agent::factory(10)->withRegency(3)->create();
     }
 }

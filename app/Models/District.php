@@ -3,8 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class District extends Model
 {
-    //
+    use HasFactory;
+    protected $fillable = [
+        'regency_id',
+        'postal_code',
+        'name',
+    ];
+
+    public function regency()
+    {
+        return $this->belongsTo(Regency::class);
+    }
 }

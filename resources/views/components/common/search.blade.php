@@ -14,7 +14,8 @@
         <!-- input -->
         <input 
             type="text" 
-            placeholder="Search"
+            placeholder="Search" 
+            name="search"
             class="bg-transparent outline-none px-2 py-2 w-full text-[var(--color-text)]"
         >
     </div>

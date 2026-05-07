@@ -7,10 +7,14 @@
       <h1>{{ $title }}</h1>
     </div>
 
+      @php
+        $name = auth()->user()->fullname;
+        $initials = strtoupper(substr($name, 0, 1));
+        @endphp
     <div class="flex flex-col gap-1 text-right">
         <div class="w-[50px] h-[50px] rounded-full text-[var(--color-text)] flex items-center justify-center font-semibold"
         style = "background: var(--btn-gradient-logo);">
-          AU
+          {{ $initials }}
         </div>
     </div>
   </nav>

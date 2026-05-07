@@ -20,5 +20,6 @@
 <body m-0 font-[Poppins] bg-[#0a0a0a]">
     @include('components/users/header')
     @yield("content")
+    @stack('script')
 </body>
 </html>

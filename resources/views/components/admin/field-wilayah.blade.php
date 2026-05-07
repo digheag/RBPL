@@ -1,10 +1,10 @@
-<div class="w-full max-w-xl">
+<div class="w-full">
 
   <!-- wrapper -->
   <div class="relative dropdown-wrapper">
 
     <!-- input hidden (buat kirim ke Laravel) -->
-    <input type="hidden" name="wilayah" class="hidden-input">
+    <input type="hidden" name="{{ $region['wilayah'] }}" class="hidden-input">
 
     <!-- box utama -->
     <div class="peer w-full border border-transparent rounded-lg 
@@ -20,22 +20,12 @@
       <!-- input search -->
       <input 
       type="text" 
-      placeholder="Kabupaten"
+      placeholder="{{ $region['label'] }}"
       class="search outline-none bg-transparent flex-1 placeholder:text-[var(--color-text)]"
 
       >
     </div>
 
-    @php
-      $works = [
-        ['area' => 'Bantul'],
-        ['area' => 'Sleman'],
-        ['area' => 'DKI Jakarta'],
-        ['area' => 'Depok'],
-        ['area' => 'Bogor'],
-        ['area' => 'Tangerang'],
-      ];  
-    @endphp
     <!-- dropdown -->
     <div class="dropdown hidden absolute w-full mt-1 
     outline-none focus:border-pink-500 text-[var(--color-text)]
@@ -43,7 +33,7 @@
     border rounded-lg max-h-40 overflow-y-auto z-50"
     style="background: linear-gradient(var(--color-surface)) padding-box,var(--btn-gradient2) border-box;">
         @foreach ($works as $work)
-            <div class="option p-2 hover:bg-[var(--color-highlight)] cursor-pointer">{{ $work['area'] }}</div>
+            <div class="option p-2 hover:bg-[var(--color-highlight)] cursor-pointer">{{ $work['name'] }}</div>
         @endforeach
     </div>
 

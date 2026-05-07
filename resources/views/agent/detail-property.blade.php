@@ -1,79 +1,61 @@
-@extends('layouts/agent')
+@extends('layouts/detail')
+@section("content")
+<div class="flex flex-cols2 content-between gap-[24px] mx-[80px] my-[24px] items-center">
+    <img src="{{ asset('storage/' . $property->property_image->whereNotNull('url')->first()?->url) }}" alt="building" class="w-[500px] h-[350px] rounded-[16px]">
+    <div class="gap-[16px]">
+        <div class="flex flex-col gap-[16px]">
+            @if($property->sold_date)
+                <span class="inline-block w-fit px-[8px] py-[8px] border-2 rounded-[8px] text-[var(--color-highlight)] font-semibold border-transparent"
+                style="background: linear-gradient(var(--color-surface)) padding-box, 
+                var(--btn-gradient2) border-box">
+                Terjual
+                </span>
+            @else 
+                <span class="inline-block w-fit px-[8px] py-[8px] border-2 rounded-[8px] text-[var(--color-text)] font-semibold border-transparent"
+                style="background: linear-gradient(var(--color-surface)) padding-box, 
+                var(--btn-gradient2) border-box">
+                    Tersedia
+                </span>
+            @endif
+            <h1 class="text-[var(--color-text)] font-bold text-[32px]">{{ $property->name }}</h1>
+        </div>
+        <p class="text-[var(--color-text)] font-normal text-[24px]">{{ $property->address }}, {{ $property->appoinment->district->regency->province->name }},{{ $property->appoinment->district->regency->name }}, {{ $property->appoinment->district->name }}</p>
+        <p class="text-[var(--color-text)] font-semibold text-[24px]">Rp {{ number_format($property->price, 0, ',', '.') }}</p>
+    </div>
+</div>
 
-@section('content')
-    @include("components/common/property-navbar")
+{{-- buat gambar yang kecil kecil --}}
+<div class="mx-[80px] flex flex-row gap-[24px] overflow-x-auto scrollbar-hide">
+    @foreach ($property->property_image->where('is_banner', 0) as $image)
+        <img src="{{ asset('storage/' . $image->url) }}" alt="" class="w-[240px] h-[200px] rounded-[16px]">
+   @endforeach
+</div>
 
-    <main class="pb-[2rem]">
-        <section class="px-[80px]">
-            <div class="w-full flex justify-center items-center">
-                <img src="" alt="gambar" class="aspect-video w-[350px]">
+<div class="flex justify-between mx-[80px] my-[24px]">
+    <div class="flex flex-col gap-[16px]">
+        <h1 class="text-[var(--color-text)] font-bold text-[24px]">Spesifikasi</h1>
+        @foreach ($property->spesification as $spec)
+            <div class="flex flex-row gap-[8px]">
+                <img src="/img/star-icon.png" alt="" class="w-[26px] aspect-square">
+                <p class="text-[var(--color-text)] font-normal text-[18px]">{{ $spec->description }}</p>
             </div>
-            <ul class="flex flex-col gap-[32px]">
-                <li class="flex flex-col gap-[8px]">
-                    <h2 class="font-bold text-2xl">Nama Properti</h2>
-                    <h3 class="font-medium text-2xl">Modern Boarding House</h3>
-                </li>
-                <li class="flex flex-col gap-[8px]">
-                    <h2 class="font-bold text-2xl">Lokasi Properti</h2>
-                    <h3 class="font-medium text-2xl">Jakarta Selatan</h3>
-                </li>
-                <li class="flex flex-col gap-[8px]">
-                    <h2 class="font-bold text-2xl">Harga Properti</h2>
-                    <h3 class="font-medium text-2xl">Rp5.000.000,00</h3>
-                </li>
-                <li class="flex flex-col gap-[8px]">
-                    <h2 class="font-bold text-2xl">Luas Properti</h2>
-                    <h3 class="font-medium text-2xl">701 Sqm</h3>
-                </li>
-                <li class="flex flex-col gap-[8px]">
-                    <h2 class="font-bold text-2xl">Spesifikasi Properti</h2>
-                    <ul class="flex flex-col gap-[8px]">
-                        <li class="flex gap-[8px]">
-                            <img src="/img/star-icon.png" alt="star icon" />
-                            <p class="font-medium text-2xl">4 floor</p>
-                        </li>
-                        <li class="flex gap-[8px]">
-                            <img src="/img/star-icon.png" alt="star icon" />
-                            <p class="font-medium text-2xl">500 meters to MRT stasiun Haji Nawi & Cipete</p>
-                        </li>
-                        <li class="flex gap-[8px]">
-                            <img src="/img/star-icon.png" alt="star icon" />
-                            <p class="font-medium text-2xl">30-40 meters to Jalan Raya Fatmawati</p>
-                        </li>
-                        <li class="flex gap-[8px]">
-                            <img src="/img/star-icon.png" alt="star icon" />
-                            <p class="font-medium text-2xl">Full furnish</p>
-                        </li>
-                    </ul>
-                </li>
-                <li class="flex flex-col gap-[8px]">
-                    <h2 class="font-bold text-2xl">Fasilitas Properti</h2>
-                    <ul class="flex flex-col gap-[8px]">
-                        <li class="flex gap-[8px]">
-                            <img src="/img/feather-icon.png" alt="star icon" />
-                            <p class="font-medium text-2xl">4 floor</p>
-                        </li>
-                        <li class="flex gap-[8px]">
-                            <img src="/img/feather-icon.png" alt="star icon" />
-                            <p class="font-medium text-2xl">500 meters to MRT stasiun Haji Nawi & Cipete</p>
-                        </li>
-                        <li class="flex gap-[8px]">
-                            <img src="/img/feather-icon.png" alt="star icon" />
-                            <p class="font-medium text-2xl">30-40 meters to Jalan Raya Fatmawati</p>
-                        </li>
-                        <li class="flex gap-[8px]">
-                            <img src="/img/feather-icon.png" alt="star icon" />
-                            <p class="font-medium text-2xl">Full furnish</p>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-
-            <div class="pt-[32px]">
-                <a class="bg-gradient-to-r from-[#0560E8] to-[#7000FF] rounded-lg p-[1px] w-full flex justify-center items-center" href="">
-                    <span class="w-full flex justify-center bg-[#1E1E1E] items-center py-4 rounded-lg text-[#F375C2]">Edit data properti</span>
-                </a>
+        @endforeach
+    </div>
+    <div class="flex flex-col gap-[16px]">
+        <h1 class="text-[var(--color-text)] font-bold text-[24px]">Fasilitas</h1>
+        @foreach ($property->facilities as $facility)
+            <div class="flex flex-row gap-[8px]">
+                <img src="/img/feather-icon.png" alt="" class="w-[26px] aspect-square">
+                <p class="text-[var(--color-text)] font-normal text-[18px]">{{ $facility->description }}</p>
             </div>
-        </section>
-    </main>
+        @endforeach
+    </div>
+</div>
+<div class="m-[80px]">
+    @include('components.common.button',[
+        'href' => route("agent.editProperty", $property->id),
+        'id' => '#',
+        'slot' => 'Edit Data Properti'
+    ])
+</div>
 @endsection

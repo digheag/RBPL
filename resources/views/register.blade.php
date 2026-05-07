@@ -1,12 +1,15 @@
 @extends("layouts/auth")
 @section("content")
+@error('email')
+    <div style="color:red">{{ $message }}</div>
+@enderror
 @php
     $fields = [
         ['type' => 'text','name' => 'fullname', 'label' => 'Full name' ],
         ['type' => 'email','name' => 'email', 'label' => 'E-mail' ],
         ['type' => 'text','name' => 'username', 'label' => 'Username' ],
         ['type' => 'password','name' => 'password', 'label' => 'Password'],
-        ['type' => 'number','name' => 'call', 'label' => 'Nomor Telepon']
+        ['type' => 'number','name' => 'telp_number', 'label' => 'Nomor Telepon']
     ];
 @endphp
 

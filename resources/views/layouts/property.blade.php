@@ -23,5 +23,6 @@
       @include('components/users/progress')
     </div>
     @yield("content")
+    @stack("scripts")
 </body>
 </html>

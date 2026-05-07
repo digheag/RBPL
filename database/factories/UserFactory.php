@@ -40,6 +40,7 @@ class UserFactory extends Factory
     {
         return $this->state([
             'role' => 'agent',
+            'profile' => 'img/test.jpg',
         ]);
     }
 

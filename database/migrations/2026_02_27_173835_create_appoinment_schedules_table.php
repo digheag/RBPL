@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('appoinment_schedules', function (Blueprint $table) {
             $table->id();
             $table->dateTime('schedule');
-            $table->boolean('is_agen_approve_schedule');
-            $table->boolean('is_seller_approve_schedule');
+            $table->boolean('is_agen_approve_schedule')->nullable();
+            $table->boolean('is_seller_approve_schedule')->nullable();
             $table->timestamps();
         });
     }

@@ -19,11 +19,26 @@ class AuthController extends Controller
     }
 
     public function registerPost(Request $request){
+        $request->validate([
+        'fullname' => 'required',
+        'email' => 'required|email|unique:users,email',
+        'username' => 'required|alpha_num|unique:users,username',
+        'telp_number' => 'required',
+        'password' => 'required|min:6',
+        'profile_image' => 'nullable|image|mimes:jpg,png,jpeg'
+        ], [
+        'email.unique' => 'Email sudah digunakan!',
+        'username.unique' => 'Username sudah digunakan!',
+        'username.alpha_num' => 'Username hanya boleh huruf dan angka tanpa spasi!',
+        'password.required' => 'Password wajib diisi!',
+        'password.min' => 'Password minimal 6 karakter!',
+        ]);
+
         $fullname = $request->input("fullname");
         $email = $request->input("email");
         $username = $request->input("username");
         $password = $request->input("password");
-        $call = $request->input("call");
+        $call = $request->input("telp_number");
 
         if($request->hasFile("profile_image")){
             $file = $request->file("profile_image");

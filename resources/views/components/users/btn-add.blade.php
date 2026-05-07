@@ -1,4 +1,4 @@
-<a href="/users/property/add"
+<a href="/users/choose/agent"
 class = "fixed bottom-6 right-6 px-[20px] py-[20px] rounded-full 
          flex items-center gap-2 
          text-white font-medium shadow-lg 

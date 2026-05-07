@@ -17,10 +17,11 @@
             
             <select name="location" 
             class="w-full p-2 rounded bg-black text-white mb-3 outline-none">
-                <option value="Bantul">Bantul</option>
-                <option value="Sleman">Sleman</option>
-                <option value="Gunung Kidul">Gunung Kidul</option>
-                <option value="Jakarta">Jakarta</option>
+                @foreach ($regencies as $regency)
+                    <option value="{{ $regency['id'] }}" {{ request('locationFilter') == $regency['id'] ? 'selected' : '' }}>
+                        {{ $regency->name }}
+                    </option>
+                @endforeach
             </select>
 
             <button type="submit" 

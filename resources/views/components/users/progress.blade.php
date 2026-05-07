@@ -1,9 +1,8 @@
 @php
     $steps = [
-        1 => 'Pengajuan penjualan',
-        2 => 'Pilih agen',
-        3 => 'Janji Temu',
-        4 => 'Review'
+        1 => 'Pilih agen',
+        2 => 'Janji Temu',
+        3 => 'Review'
     ];
 @endphp
 

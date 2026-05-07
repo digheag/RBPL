@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\notary;
+use App\Models\Property;
 use app\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -16,10 +17,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-         $this->call([
+        $this->call([
             UserSeeder::class,
+            /* NotarySeeder::class, */
+            LocationSeeder::class,
             AgentSeeder::class,
-            notarySeeder::class,
-            ]);
+            AppoinmentSeeder::class,
+            PropertySeeder::class,
+            TransactionSeeder::class,
+        ]);
     }
 }

@@ -1,9 +1,16 @@
+@php
+    $type = $type ?? ($field['type'] ?? 'text');
+    $name = $name ?? ($field['name'] ?? '');
+    $label = $label ?? ($field['label'] ?? '');
+    $value = $value ?? ($field['value'] ?? '');
+@endphp
+
 <div class="relative">
           <input 
-            type="{{ $field['type'] }}"
-            name="{{ $field['name'] }}"
+            type="{{ $type }}"
+            name="{{ $name }}"
             placeholder="isi"
-            value="{{ old($field['name']) }}"
+            value="{{ old($name, $value) }}"
             class="peer input-field w-full border border-transparent rounded-lg px-[12px] 
             pt-7 pb-2 outline-none focus:border-pink-500 text-[var(--color-text)]
             placeholder-transparent
@@ -28,6 +35,6 @@
             peer-not-placeholder-shown:top-2.5
             peer-not-placeholder-shown:-translate-y-1
             peer-not-placeholder-shown:text-sm">
-            {{ $field['label'] }}
+            {{ $label }}
           </label>          
         </div>

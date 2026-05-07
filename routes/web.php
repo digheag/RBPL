@@ -71,6 +71,60 @@ Route::prefix('/users')
         Route::get('/transacation/method/negotiation', [TransactionController::class, 'transactionNegotiation'])->name('users.negotiation');
     });
 
+    Route::get('/transaction/method', function () {
+        return view('users/method-transaction');
+    });
+    Route::get('/add-negotiation', function () {
+        return view('users.add-negotiation');
+    });
+    Route::get('/negotiation', function () {
+        return view('users.negotiation');
+    });
+    Route::get('/negotiation-detail', function () {
+        return view('users.negotiation-detail');
+    });
+    Route::get('/negotiation-detail-rejected', function () {
+        return view('users.negotiation-detail-rejected');
+    });
+    Route::get('/renegotiation', function () {
+        return view('users.renegotiation');
+    });
+});
+
+
+Route::get('/users/choose/agent', function () {
+    return view('users/choose-agent');
+});
+
+Route::get('/users/property/add', function () {
+    return view('users/add-property');
+});
+
+Route::get('/users/appoinment', function () {
+    return view('users/appoinment');
+});
+
+
+
+Route::prefix('/agent')
+->middleware("auth")
+->group(function () {
+    Route::get('/appointment', [AgentController::class, 'appointment']);
+    Route::get('/appointment/{id}', [AgentController::class, 'appointmentDetail']);
+    Route::post("/logout", [AuthController::class, 'logout']);
+
+    Route::get('/appointment/{id}/create-property', [AgentController::class, 'createProperty']);
+    Route::get('/property', [AgentController::class, 'property']);
+    Route::get('/property/{id}', [AgentController::class, 'detailProperty']);
+    Route::get('/property/{id}/publication', [AgentController::class, 'publication']);
+    Route::get('/offer', [AgentController::class, 'offer']);
+    Route::get('/history-negotiation', function () {
+    return view('agent.history-negotiation'); });
+    Route::get('/negotiation-pending', function () {
+    return view('agent.negotiation-pending'); });
+    Route::get('/negotiation-rejected', function () {
+    return view('agent.negotiation-rejected'); });
+});
 
 Route::prefix('/agent')
     ->middleware("auth")

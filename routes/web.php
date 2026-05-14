@@ -70,16 +70,19 @@ Route::prefix('/users')
         Route::post('transaction/method/direct', [TransactionController::class, 'transactionDirectStore'])->name('users.DirectStore');
         Route::get('/transacation/method/negotiation', [TransactionController::class, 'transactionNegotiation'])->name('users.negotiation');
 
-        Route::get('/add-negotiation', function () {
-        return view('users.add-negotiation');
+        Route::get('/negotiation/add', function () {
+        return view('users.add-negotiation',[
+            'link' => route('users.transactionMethod'),
+            'title' => 'Add Negotiation',
+        ]);
         });
         Route::get('/negotiation', function () {
             return view('users.negotiation');
         });
-        Route::get('/negotiation-detail', function () {
+        Route::get('/negotiation/detail/{id}', function () {
             return view('users.negotiation-detail');
         });
-        Route::get('/negotiation-detail-rejected', function () {
+        Route::get('/negotiation/detail/rejected', function () {
             return view('users.negotiation-detail-rejected');
         });
         Route::get('/renegotiation', function () {

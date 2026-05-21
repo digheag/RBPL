@@ -1,75 +1,63 @@
 @extends('layouts.users')
 
 @section('content')
-<div class="w-full flex justify-center">
-    <div class="w-[1120px] px-[80px] py-[60px] flex flex-col items-start gap-16 rounded-tr-[20px] rounded-br-[20px] rounded-bl-[20px] shadow-[inset_4px_0px_3px_rgba(59,104,255,0.28),0px_4px_4px_rgba(59,104,255,0.10)]">
-
-        <div class="w-full flex flex-col gap-9">
-            <h1 class="text-[45px] font-bold text-[#EFECE3]">Riwayat Negosiasi</h1>
-
+<div class="flex backdrop-blur-md border border-white/20 shadow-lg rounded-2xl mx-[80px] py-[32px] px-[80px] flex-col gap-[32px]">
+    <div class="w-full flex flex-col gap-9">
+        <h1 class="text-[24px] font-bold text-[var(--color-text)]">Riwayat Negosiasi</h1>
             <div class="w-full flex flex-col gap-9">
-
-                <div class="w-full px-4 bg-[#1E1E1E] rounded-lg shadow-[0px_4px_4px_rgba(0,0,0,0.25)] border border-[#0E21A0] flex justify-between items-center">
-                    <div class="h-24 flex items-center">
-                        <div class="flex flex-col justify-center">
-                            <p class="text-base font-medium text-[#EFECE3]">ID Negosiasi: N01</p>
-                            <p class="text-2xl font-bold text-[#EFECE3]">Modern Boarding House</p>
+                @foreach($negotiations as $negotiation)
+                @php
+                    if ($negotiation->is_agen_approve === 1 && $negotiation->is_seller_approve === 1) {
+                        $status = 'approved';
+                    } else if($negotiation->is_agen_approve === 0 && $negotiation->is_seller_approve === 0) {
+                        $status = 'rejected';
+                    } else if($negotiation->is_agen_approve === 1 && $negotiation->is_seller_approve === 0) {
+                        $status = 'rejected';
+                    } else {
+                        $status = 'pending';
+                    }
+                @endphp
+                    <article class="bg-[#1E1E1E] flex justify-between items-center px-[16px] py-[16px] rounded-xl">
+                        <div class="flex items-center gap-6">
+                            <div>
+                                <p class="text-[16px] text-[var(--color-text)] pb-[8px]">ID Negosiasi: {{ $negotiation->id }}</p>
+                                <h2 class="text-[24px] font-bold">{{$negotiation->property->name}}</h2>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="flex items-center gap-4">
-                        @include('components.common.negotiation-status', [
-                            'type' => 'approved'
-                        ])
-                    <a href="{{ url('/users/negotiation-detail') }}">
-                        <img src="/img/arrow.png" class="w-6 h-6" />
-                    </a>
-                    </div>
-                </div>
-
-                <div class="w-full px-4 bg-[#1E1E1E] rounded-lg shadow-[0px_4px_4px_rgba(0,0,0,0.25)] border border-[#0E21A0] flex justify-between items-center">
-                    <div class="h-24 flex items-center">
-                        <div class="flex flex-col justify-center">
-                            <p class="text-base font-medium text-[#EFECE3]">ID Negosiasi: N02</p>
-                            <p class="text-2xl font-bold text-[#EFECE3]">Modern Boarding House</p>
+                        <div class="flex items-center gap-4">
+                            @include('components.common.negotiation-status', [
+                                'type' => $status
+                            ])
+                            <a href="{{ route('negotiation.detail', ['id' => $negotiation->id]) }}">
+                                <i class="fa-solid fa-angle-right text-[24px]"></i>
+                            </a>
                         </div>
-                    </div>
-
-                    <div class="flex items-center gap-4">
-                        @include('components.common.negotiation-status', [
-                            'type' => 'rejected'
-                        ])
-
-                    <a href="{{ url('/users/negotiation-detail-rejected') }}">
-                        <img src="/img/arrow.png" class="w-6 h-6" />
-                    </a>
-                    </div>
-                </div>
-
+                    </article>
+                @endforeach
             </div>
-        </div>
 
-        <div class="w-full flex flex-col gap-9">
-            <h1 class="text-[45px] font-bold text-[#EFECE3]">Menunggu persetujuan</h1>
-
-            <div class="w-full px-4 bg-[#1E1E1E] rounded-lg shadow-[0px_4px_4px_rgba(0,0,0,0.25)] border border-[#0E21A0] flex justify-between items-center">
-                <div class="h-24 flex items-center">
-                    <div class="flex flex-col justify-center">
-                        <p class="text-base font-medium text-[#EFECE3]">ID Negosiasi: N03</p>
-                        <p class="text-2xl font-bold text-[#EFECE3]">Modern Boarding House</p>
+    <div class="w-full flex flex-col gap-9 mt-[32px]">
+        <h1 class="text-[32px] font-bold text-[var(--color-text)]">Menunggu persetujuan</h1>
+        @foreach($negotiations as $negotiation)
+        @if($negotiation->is_agen_approve === 1 && $negotiation->is_seller_approve === null && $negotiation->seller_id === Auth::id())
+           <article class="bg-[#1E1E1E] flex justify-between items-center px-[16px] py-[16px] rounded-xl">
+                <div class="flex items-center gap-6">
+                    <div>
+                        <p class="text-[16px] text-[var(--color-text)] pb-[8px]">ID Negosiasi: {{ $negotiation->id }}</p>
+                        <h2 class="text-[24px] font-bold">{{$negotiation->property->name}}</h2>
                     </div>
                 </div>
-
                 <div class="flex items-center gap-4">
                     @include('components.common.negotiation-status', [
                         'type' => 'pending'
                     ])
-
-                    <img src="/img/arrow.png" class="w-6 h-6" />
+                    <a href="{{ route('negotiation.detail', ['id' => $negotiation->id]) }}">
+                        <i class="fa-solid fa-angle-right text-[24px]"></i>
+                    </a>
                 </div>
-            </div>
-        </div>
-
+            </article>
+            @endif
+            @endforeach
     </div>
 </div>
 @endsection

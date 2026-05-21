@@ -62,29 +62,19 @@ Route::prefix('/users')
 
         Route::get('negotiation', [TransactionController::class, 'negotiation'])->name('users.negotiation');
         Route::get('negotiation/detail/{id}', [TransactionController::class, 'negotiationDetail'])->name('negotiation.detail');
-
+        Route::get('transaction/method/negotiation', [TransactionController::class, 'negotiationTransaction'])->name('users.negotiationTransaction');
+        Route::patch('negotiation/approve/{id}', [TransactionController::class, 'approveNegotiation'])->name('users.approveNegotiation');
+        Route::patch('negotiation/reject/{id}', [TransactionController::class, 'rejectNegotiation'])->name('users.rejectNegotiation');
+        
         Route::get('/transaction', [TransactionController::class, 'transaction'])->name('users.transaction');
         Route::get('/transaction/detail/{id}', [TransactionController::class, 'transactionDetail'])->name('users.detailTransaction');
         Route::get('/transaction/method', [TransactionController::class, 'transactionMethod'])->name('users.transactionMethod');
         Route::get('/transaction/method/direct',[TransactionController::class, 'transactionDirect'])->name('users.direct');
         Route::post('transaction/method/direct', [TransactionController::class, 'transactionDirectStore'])->name('users.DirectStore');
-        Route::get('/transacation/method/negotiation', [TransactionController::class, 'transactionNegotiation'])->name('users.negotiation');
 
-        Route::get('/negotiation/add', function () {
-        return view('users.add-negotiation',[
-            'link' => route('users.transactionMethod'),
-            'title' => 'Add Negotiation',
-        ]);
-        });
-        Route::get('/negotiation', function () {
-            return view('users.negotiation');
-        });
-        Route::get('/negotiation/detail/{id}', function () {
-            return view('users.negotiation-detail');
-        });
-        Route::get('/negotiation/detail/rejected', function () {
-            return view('users.negotiation-detail-rejected');
-        });
+        Route::get('/negotiation/add', [TransactionController::class, 'addNegotiation'])->name('users.addNegotiation');
+        Route::post('/negotiation/add', [TransactionController::class, 'negotiationStore'])->name('users.negotiationStore');
+
         Route::get('/renegotiation', function () {
             return view('users.renegotiation');
         });

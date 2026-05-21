@@ -78,7 +78,7 @@ Setiap metode memiliki alur dan keuntungan berbeda untuk memastikan proses pembe
 
             <div class="mt-auto">
                 @include("components/common/button", [
-                'href' => route('users.negotiation'),
+                'href' => route('users.addNegotiation'),
                 'id' => NULL,
                 'slot' => 'Pilih Metode'
                 ])

@@ -9,5 +9,4 @@
       <a href="{{ route('users.detailTransaction', ['id' => $transaction->id]) }}">
          <i class="fa-solid fa-angle-right text-4xl"></i>
       </a>
-
    </article>

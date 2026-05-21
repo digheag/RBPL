@@ -28,7 +28,7 @@ class Negotiation extends Model
     }
 
     public function agen(){
-        return $this->belongsTo(Agent::class, 'agen_id');
+        return $this->belongsTo(Agent::class, 'agent_id');
     }
 
     public function property(){

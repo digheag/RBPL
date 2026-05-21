@@ -3,11 +3,11 @@
 <div class="flex backdrop-blur-md border border-white/20 shadow-lg rounded-2xl mx-[80px] py-[32px] px-[80px] flex-col gap-[32px]">
 
     <div class="self-stretch text-center text-[var(--color-text)] text-[40px] font-bold">
-        Modern Building House
+        {{ $property->name }}
     </div>
 
     <div class="self-stretch text-[var(--color-highlight)] text-[32px] font-bold">
-        Harga Jual: Rp. 500.000.000,00
+        Harga Jual: Rp. {{ number_format($property->price, 0, ',', '.') }}
     </div>
 
     @php 
@@ -28,6 +28,7 @@
             <div class="self-stretch">
                 @include('components.common.button', [
                     'type' => 'submit',
+                    'id' => '#',
                     'slot' => 'Kirim Negosiasi'
                     ])
             </div>

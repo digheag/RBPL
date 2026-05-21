@@ -14,8 +14,8 @@
     ];
 @endphp
 
-<div class="px-6 py-2 {{ $styles[$status] ?? $styles['pending'] }} rounded-lg border-2 border-[#EFECE3]">
-    <p class="text-white text-xl font-semibold font-['Poppins']">
+<div class="px-[24px] py-[8px] {{ $styles[$status] ?? $styles['pending'] }} rounded-lg border-2 border-[#EFECE3]">
+    <p class="text-white text-[16px] font-semibold font-['Poppins']">
         {{ $labels[$status] ?? $labels['pending'] }}
     </p>
 </div>

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
 use App\Models\Property;
-use App\Models\Property_image;
+use App\Models\Negotiation;
 use App\Repositories\Appointment\AppointmentRepository;
 use Carbon\Carbon;
 
@@ -287,13 +287,82 @@ class AgentController extends Controller
             ->with('success', 'Property berhasil dihapus');
     }
 
-    public function publication($id)
+    public function negotiationHistory()
     {
-        return view("agent/publication-property");
+        $negotiations = Negotiation::with([
+            'property',
+        ])->get()->where('agent_id', Auth::id());
+
+        return view("agent/negotiationHistory",[
+            'negotiations' => $negotiations
+        ]);
     }
 
-    public function offer()
+    public function negotiationDetail($id)
     {
-        return view("agent/offer");
+        $negotiation = Negotiation::with([
+        'property',
+        'agen.user',
+        'seller',
+    ])->findOrFail($id);
+
+        return view("agent/negotiationDetail",[
+            "link" => '/agent/negotiationHistory',
+            "title" => 'Detail Negosiasi',
+            "negotiationId" => $id,
+            'negotiation' => $negotiation
+        ]);
+    }
+
+    public function approveNegotiation($id)
+    {
+        $negotiation = Negotiation::findOrFail($id);
+
+        if ($negotiation->agent_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $negotiation->is_agen_approve = 1;
+        $negotiation->save();
+
+        return redirect()->route('agent.negotiationHistory', ['id' => $id])
+            ->with('success', 'Negosiasi berhasil disetujui');
+    }
+
+    public function rejectNegotiation(Request $request, $id)
+    {
+        $request->validate([
+            'rejection_reason' => 'required|string|max:255',
+        ]);
+
+        $negotiation = Negotiation::findOrFail($id);
+
+        if ($negotiation->agent_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $negotiation->update([
+            'is_agen_approve' => 0,
+            'description' => $request->rejection_reason,
+        ]);
+
+        return redirect()
+            ->route('agent.negotiationHistory')
+            ->with('success', 'Negosiasi berhasil ditolak');
+    }   
+
+    public function negotiationRejectionReason($id)
+    {
+        $negotiation = Negotiation::with([
+            'property',
+            'agen.user',
+            'seller',
+        ])->findOrFail($id);
+
+       return view('agent/negotiationRejection',[
+            'link' => route('agent.negotiationDetail', ['id' => $id]),
+            'title' => 'Alasan Penolakan Negosiasi',
+            'negotiation' => $negotiation,
+       ]);
     }
 }

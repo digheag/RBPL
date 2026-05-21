@@ -5,16 +5,16 @@
 
     <div class="grid grid-cols-1 md:grid-cols-1 gap-4 w-full">
         <h1 class="text-[20px] font-semibold text-[var(--color-text)]">ID Negosiasi: {{ $negotiation->id }}</h1>
-        <h1 class="text-[20px] font-semibold text-[var(--color-highlight)]">Harga Jual: {{ $negotiation->property->price }}</h1>
+        <h1 class="text-[20px] font-semibold text-[var(--color-text)]">Harga Jual: {{ $negotiation->property->price }}</h1>
+        <h1 class="text-[20px] font-semibold text-[var(--color-text)]">Harga Negosiasi: {{ $negotiation->offer_price }}</h1>
     </div>
 
-    <form action="{{ route('users.renegotiationUpdate', $negotiation->id) }}" method="POST">
+    <form action="{{ route('users.rejectNegotiation', $negotiation->id) }}" method="POST">
         @csrf
         @method ('PATCH')
         @php
             $fields = [
-                ['type' => 'text','name' => 'newPrice', 'label' => 'Negosiasi Baru', 'value' => $negotiation->offer_price],
-                ['type' => 'text','name' => 'description', 'label' => 'Alasan', 'value' => $negotiation->description]
+                ['type' => 'text','name' => 'rejection_reason', 'label' => 'Alasan Penolakan']
             ];
         @endphp
         <div class="grid grid-cols-1 md:grid-cols-1 gap-4 w-full">
@@ -25,7 +25,7 @@
             @include("components.common.button", [
                 'type' => 'submit',
                 'id' => NULL,
-                'slot' => 'Ajukan Negosiasi Ulang'
+                'slot' => 'Tolak Negosiasi'
             ])
         </div>
         

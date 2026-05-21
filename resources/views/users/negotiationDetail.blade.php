@@ -1,6 +1,11 @@
 @extends('layouts.detail')
 @section('content')
-    <div class="flex backdrop-blur-md border border-white/20 shadow-lg rounded-2xl mx-[80px] py-[32px] px-[80px] flex-col gap-[32px]">
+<div class="flex backdrop-blur-md border border-white/20 shadow-lg rounded-2xl mx-[80px] py-[32px] px-[80px] flex-col gap-[32px]">
+    @if(session('success'))
+        <div class="bg-[#79AE6F] text-white px-[8px] py-[8px] rounded-xl">
+            {{ session('success') }}
+        </div>
+    @endif
         <h1 class="text-[26px] font-bold text-[var(--color-text)]">{{ $negotiation->property->name }}</h1>
         <div class = "flex flex-col gap-[24px]">
             <div class="flex justify-between items-center">
@@ -60,21 +65,8 @@
                 ])
             </div>
         @elseif($negotiation->is_agen_approve === 1 && $negotiation->is_seller_approve === 0)
-            <div class="w-full flex gap-4 items-center">
-                <div class="flex items-center gap-4">
-                    @include('components.common.negotiation-status', [
-                            'type' => $status
-                    ])
-                </div>
-                <p class="text-[18px] text-[var(--color-highlight)] font-semibold">{{ $negotiation->description }}</p>
-            </div>
-            <div class="w-full">
-                @include('components.common.button', [
-                    'href' => url('/users/transaction/method'),
-                    'slot' => 'Ajukan negosiasi ulang'
-                ])
-            </div>
-        @else
+            @if($negotiation->seller_id === Auth::id() &&
+        $negotiation->seller_id !== $negotiation->buyer_id)
                 <div class="w-full flex gap-4 items-center">
                     <div class="flex items-center gap-4">
                         @include('components.common.negotiation-status', [
@@ -85,10 +77,47 @@
                 </div>
                 <div class="w-full">
                     @include('components.common.button', [
-                        'href' => url('/users/transaction/method'),
+                        'href' => route('users.renegotiation', $negotiation->id),
                         'slot' => 'Ajukan negosiasi ulang'
                     ])
                 </div>
+            @elseif($negotiation->buyer_id === Auth::id())
+                <div class="w-full flex gap-4 items-center">
+                    <div class="flex items-center gap-4">
+                        @include('components.common.negotiation-status', [
+                                'type' => $status
+                        ])
+                    </div>
+                    <p class="text-[18px] text-[var(--color-highlight)] font-semibold">{{ $negotiation->description }}</p>
+                </div>
+            @endif
+        @else
+                @if($negotiation->seller_id === Auth::id() &&
+                 $negotiation->seller_id !== $negotiation->buyer_id)
+                <div class="w-full flex gap-4 items-center">
+                    <div class="flex items-center gap-4">
+                        @include('components.common.negotiation-status', [
+                                'type' => $status
+                        ])
+                    </div>
+                    <p class="text-[18px] text-[var(--color-highlight)] font-semibold">{{ $negotiation->description }}</p>
+                </div>
+                <div class="w-full">
+                    @include('components.common.button', [
+                        'href' => route('users.renegotiation', $negotiation->id),
+                        'slot' => 'Ajukan negosiasi ulang'
+                    ])
+                </div>
+            @elseif($negotiation->buyer_id === Auth::id())
+                <div class="w-full flex gap-4 items-center">
+                    <div class="flex items-center gap-4">
+                        @include('components.common.negotiation-status', [
+                                'type' => $status
+                        ])
+                    </div>
+                    <p class="text-[18px] text-[var(--color-highlight)] font-semibold">{{ $negotiation->description }}</p>
+                </div>
+            @endif
         @endif
 
         @if($negotiation->is_agen_approve === 1 && $negotiation->is_seller_approve === null && $negotiation->seller_id === Auth::id())
@@ -104,14 +133,11 @@
                         </form>
                     </div>
                     <div class="w-full">
-                        <form action="{{ route('users.rejectNegotiation', ['id' => $negotiation->id]) }}" method="POST">
-                            @csrf
-                            @method('PATCH')
+                        <a href="{{ route('users.negotiationRejectionReason', ['id' => $negotiation->id]) }}">
                             @include('components.common.errorBtn', [
-                                'type' => 'submit',
                                 'slot' => 'Tolak Negosiasi'
                             ])
-                        </form>
+                        </a>
                     </div>
                 </div>
         @endif

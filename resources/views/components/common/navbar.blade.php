@@ -14,10 +14,10 @@ function isActive($route) {
             <li><a class="font-bold text-xl {{ request()->routeIs("agent.appointmentList") ? 'bg-clip-text text-transparent bg-gradient-to-t from-[#B153D7] via-[#4D2FB2] to-[#0E21A0]'
             : 'text-[var(--color-text)] hover:opacity-70'; }} transition-all duration-300" href="/agent/appointment">Janji Temu</a></li>
             <li><a class="font-bold text-xl {{ request()->routeIs('agent.property') ? 'bg-clip-text text-transparent bg-gradient-to-t from-[#B153D7] via-[#4D2FB2] to-[#0E21A0]'
-            : 'text-[var(--color-text)] hover:opacity-70'; }} transition-all duration-300" href="/agent/property">Property</a></li>
-            <li><a class="font-bold text-xl" href="">Publikasi</a></li>
+            : 'text-[var(--color-text)] hover:opacity-70'; }} transition-all duration-300" href="/agent/property">Properti</a></li>
+             <li><a class="font-bold text-xl {{ request()->routeIs('agent.negotiationHistory') ? 'bg-clip-text text-transparent bg-gradient-to-t from-[#B153D7] via-[#4D2FB2] to-[#0E21A0]'
+            : 'text-[var(--color-text)] hover:opacity-70'; }} transition-all duration-300" href="/agent/negotiation/history">Negosiasi</a></li>
             <li><a class="font-bold text-xl" href="">Dokumen</a></li>
-            <li><a class="font-bold text-xl" href="">Penawaran</a></li>
             <li>
                 <form method="POST" action="/agent/logout">
                     @csrf

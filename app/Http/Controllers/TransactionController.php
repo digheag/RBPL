@@ -54,19 +54,77 @@ class TransactionController extends Controller
             ->with('success', 'Negosiasi berhasil disetujui');
     }
 
-    public function rejectNegotiation($id)
+    public function rejectNegotiation(Request $request, $id)
     {
+        $request->validate([
+            'rejection_reason' => 'required|string|max:255',
+        ]);
+
         $negotiation = Negotiation::findOrFail($id);
 
         if ($negotiation->seller_id !== Auth::id()) {
             abort(403);
         }
 
-        $negotiation->is_seller_approve = 0;
+        $negotiation->update([
+            'is_agen_approve' => 0,
+            'description' => $request->rejection_reason,
+        ]);
+
+        return redirect()
+            ->route('negotiation.detail', ['id' => $id])
+            ->with('success', 'Negosiasi berhasil ditolak');
+    }
+
+    public function renegotiation($id){
+        $negotiation = Negotiation::with([
+            'property',
+            'agen.user',
+            'seller',
+        ])->findOrFail($id);
+
+        return view('users/renegotiation',[
+            'link' => '/users/negotiation',
+            'title' => 'Renegotiation',
+            'negotiation' => $negotiation,
+        ]);
+    }
+
+    public function renegotiationUpdate(Request $request, $id){
+        $negotiation = Negotiation::findOrFail($id);
+
+        if ($negotiation->buyer_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $request->validate([
+            'newPrice' => 'required|numeric|min:1',
+            'description' => 'nullable|string',
+        ]);
+
+        $negotiation->offer_price = $request->newPrice;
+        $negotiation->description = $request->description;
+        $negotiation->is_agen_approve = null;
+        $negotiation->is_seller_approve = null;
         $negotiation->save();
 
         return redirect()->route('negotiation.detail', ['id' => $id])
-            ->with('success', 'Negosiasi berhasil ditolak');
+            ->with('success', 'Negosiasi berhasil diperbarui');
+    }
+
+    public function negotiationRejectionReason($id)
+    {
+        $negotiation = Negotiation::with([
+            'property',
+            'agen.user',
+            'seller',
+        ])->findOrFail($id);
+
+       return view('users/negotiationReject',[
+            'link' => route('negotiation.detail', ['id' => $id]),
+            'title' => 'Alasan Penolakan Negosiasi',
+            'negotiation' => $negotiation,
+       ]);
     }
 
     public function transaction()

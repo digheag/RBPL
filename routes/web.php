@@ -65,7 +65,9 @@ Route::prefix('/users')
         Route::get('transaction/method/negotiation', [TransactionController::class, 'negotiationTransaction'])->name('users.negotiationTransaction');
         Route::patch('negotiation/approve/{id}', [TransactionController::class, 'approveNegotiation'])->name('users.approveNegotiation');
         Route::patch('negotiation/reject/{id}', [TransactionController::class, 'rejectNegotiation'])->name('users.rejectNegotiation');
-        
+        Route::get('negotiation/rejection/reason/{id}', [TransactionController::class, 'negotiationRejectionReason'])->name('users.negotiationRejectionReason');
+
+
         Route::get('/transaction', [TransactionController::class, 'transaction'])->name('users.transaction');
         Route::get('/transaction/detail/{id}', [TransactionController::class, 'transactionDetail'])->name('users.detailTransaction');
         Route::get('/transaction/method', [TransactionController::class, 'transactionMethod'])->name('users.transactionMethod');
@@ -75,9 +77,8 @@ Route::prefix('/users')
         Route::get('/negotiation/add', [TransactionController::class, 'addNegotiation'])->name('users.addNegotiation');
         Route::post('/negotiation/add', [TransactionController::class, 'negotiationStore'])->name('users.negotiationStore');
 
-        Route::get('/renegotiation', function () {
-            return view('users.renegotiation');
-        });
+        Route::get('/renegotiation/{id}', [TransactionController::class, 'renegotiation'])->name('users.renegotiation');
+        Route::patch('/renegotiation/{id}', [TransactionController::class, 'renegotiationUpdate'])->name('users.renegotiationUpdate');
 });
 
 Route::prefix('/agent')
@@ -99,13 +100,12 @@ Route::prefix('/agent')
         Route::delete('/property/{id}', [AgentController::class, 'deleteProperty'])->name('agent.propertyDelete');
         // Route::get('/property/{id}/publication', [AgentController::class, 'publication']);
         // Route::get('/offer', [AgentController::class, 'offer']);
+        Route::get('negotiation/history', [AgentController::class, 'negotiationHistory'])->name('agent.negotiationHistory');
+        Route::get('negotiation/Detail/{id}', [AgentController::class, 'negotiationDetail'])->name('agent.negotiationDetail');
+        Route::patch('negotiation/approve/{id}', [AgentController::class, 'approveNegotiation'])->name('agent.approveNegotiation');
+        Route::patch('negotiation/reject/{id}', [AgentController::class, 'rejectNegotiation'])->name('agent.rejectNegotiation');
+        Route::get('negotiation/rejection/reason/{id}', [AgentController::class, 'negotiationRejectionReason'])->name('agent.negotiationRejectionReason');
 
-        Route::get('/history-negotiation', function () {
-        return view('agent.history-negotiation'); });
-        Route::get('/negotiation-pending', function () {
-        return view('agent.negotiation-pending'); });
-        Route::get('/negotiation-rejected', function () {
-        return view('agent.negotiation-rejected'); });
     });
 
 Route::prefix('/notary')

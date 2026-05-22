@@ -263,52 +263,40 @@ class TransactionController extends Controller
         ->with('success', 'Negosiasi berhasil diajukan');
     }
 
-    public function negotiationTransaction(){
-        $agentId = session('agentId');
-
-        if (!$agentId) {
-        return redirect()->route('users.property')
-            ->with('error', 'Agent tidak ditemukan di session');
-        }
-
-        $agent = Agent::with([
-        'user',
-        'agentRegency.regency'
-        ])->findOrFail($agentId);
+    public function negotiationTransaction($id){
+        $negotiation = Negotiation::with('agen.user')->findOrFail($id);
+        $agent = $negotiation->agen;
 
 
         return view('users/negotiationTransaction',[
             'agent' => $agent,
             'link' => route('users.transactionMethod'),
             'title' => 'Transaksi Negosiasi',
+            'negotiation' => $negotiation,
         ]);
     }
 
-    public function negotiationTransactionStore(Request $request){
-        $agentId = session('agentId');
-        $propertyId = session('propertyId');
+    public function negotiationTransactionStore(Request $request, $id){
+        $negotiation = Negotiation::with('agen.user')->findOrFail($id);
+        $agent = $negotiation->agen;
 
-        if (empty($agentId) || empty($propertyId)) {
-            return redirect()->route('users.property')
-                ->with('error', 'Session tidak valid');
-        }
+        $property = Property::with('Appoinment')
+        ->findOrFail($negotiation->property_id);
 
-         $property = Property::with([
-            'Appoinment'
-         ])->findOrFail($propertyId);
 
          $transaction = Transaction::create([
-            'property_id' => $propertyId,
+            'property_id' => $property->id,
             'seller_id' => $property->Appoinment->seller_id,
-            'agent_id' => $agentId,
+            'agent_id' => $agent->id,
             'buyer_id' => Auth::id(),
             'deal_price' => $property->price,
             'transaction_type' => 'negotiation',
-            'negotiation_id' => null,
+            'negotiation_id' => $negotiation->id,
          ]);
 
         session()->forget(['agentId', 'propertyId']);
         return redirect()->route('users.transaction')
         ->with('success', 'Transaksi berhasil dibuat');
+
     }
 }

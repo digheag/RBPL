@@ -60,7 +60,7 @@
         @elseif($negotiation->is_agen_approve === 1 && $negotiation->is_seller_approve === 1)
             <div class="w-full">
                 @include('components.common.button', [
-                    'href' => route('users.negotiationTransaction'),
+                    'href' => route('users.negotiationTransaction', $negotiation->id),
                     'slot' => 'Lakukan pembayaran'
                 ])
             </div>

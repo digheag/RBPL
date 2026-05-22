@@ -62,7 +62,8 @@ Route::prefix('/users')
 
         Route::get('negotiation', [TransactionController::class, 'negotiation'])->name('users.negotiation');
         Route::get('negotiation/detail/{id}', [TransactionController::class, 'negotiationDetail'])->name('negotiation.detail');
-        Route::get('transaction/method/negotiation', [TransactionController::class, 'negotiationTransaction'])->name('users.negotiationTransaction');
+        Route::get('transaction/method/negotiation/{id}', [TransactionController::class, 'negotiationTransaction'])->name('users.negotiationTransaction');
+        Route::post('transaction/method/negotiation/store/{id}',[TransactionController::class, 'negotiationTransactionStore'])->name('users.NegotiationTransactionStore');
         Route::patch('negotiation/approve/{id}', [TransactionController::class, 'approveNegotiation'])->name('users.approveNegotiation');
         Route::patch('negotiation/reject/{id}', [TransactionController::class, 'rejectNegotiation'])->name('users.rejectNegotiation');
         Route::get('negotiation/rejection/reason/{id}', [TransactionController::class, 'negotiationRejectionReason'])->name('users.negotiationRejectionReason');

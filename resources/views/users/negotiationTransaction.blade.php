@@ -30,7 +30,7 @@
             </div>
 
         </div>
-        <form action="{{ route('users.NegotiationTransactionStore') }}" method="POST">
+        <form action="{{ route('users.NegotiationTransactionStore', $negotiation->id) }}" method="POST">
             @csrf
             <div class="mt-auto">
                 @include("components/common/button", [

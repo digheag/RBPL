@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Agent;
 use App\Models\transaction;
 use App\Models\Property;
 
@@ -17,6 +18,12 @@ class TransactionTest extends TestCase
     protected $user;
     protected function setUp():void{
         parent::setUp();
+        $user1 = User::factory()->create(['id' => 2]);
+        $agentUser = User::factory()->create(['id' => 3]);
+        $agent = Agent::factory()->create([
+            'id' => 4,
+            'user_id' => $agentUser->id,
+        ]);
         $this->user = User::factory()->create([
             'role' => 'users',
         ]);

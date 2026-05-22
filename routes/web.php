@@ -76,7 +76,6 @@ Route::prefix('/users')
 
         Route::get('/negotiation/add', [TransactionController::class, 'addNegotiation'])->name('users.addNegotiation');
         Route::post('/negotiation/add', [TransactionController::class, 'negotiationStore'])->name('users.negotiationStore');
-
         Route::get('/renegotiation/{id}', [TransactionController::class, 'renegotiation'])->name('users.renegotiation');
         Route::patch('/renegotiation/{id}', [TransactionController::class, 'renegotiationUpdate'])->name('users.renegotiationUpdate');
 });

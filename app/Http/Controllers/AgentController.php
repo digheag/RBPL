@@ -318,14 +318,14 @@ class AgentController extends Controller
     {
         $negotiation = Negotiation::findOrFail($id);
 
-        if ($negotiation->agent_id !== Auth::id()) {
+        if ($negotiation->agen->user_id !== Auth::id()) {
             abort(403);
         }
 
         $negotiation->is_agen_approve = 1;
         $negotiation->save();
 
-        return redirect()->route('agent.negotiationHistory', ['id' => $id])
+        return redirect()->route('agent.negotiationDetail', ['id' => $id])
             ->with('success', 'Negosiasi berhasil disetujui');
     }
 
@@ -337,7 +337,7 @@ class AgentController extends Controller
 
         $negotiation = Negotiation::findOrFail($id);
 
-        if ($negotiation->agent_id !== Auth::id()) {
+        if ($negotiation->agen->user_id !== Auth::id()) {
             abort(403);
         }
 
@@ -347,7 +347,7 @@ class AgentController extends Controller
         ]);
 
         return redirect()
-            ->route('agent.negotiationHistory')
+            ->route('agent.negotiationDetail', ['id' => $id])
             ->with('success', 'Negosiasi berhasil ditolak');
     }   
 

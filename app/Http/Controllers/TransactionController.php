@@ -67,7 +67,7 @@ class TransactionController extends Controller
         }
 
         $negotiation->update([
-            'is_agen_approve' => 0,
+            'is_seller_approve' => 0,
             'description' => $request->rejection_reason,
         ]);
 
